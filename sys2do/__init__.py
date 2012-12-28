@@ -24,8 +24,8 @@ for error_code in [403, 404] : app.error_handler_spec[None][error_code] = s.erro
 #===============================================================================
 # root.py
 #===============================================================================
-# import views.root as r
-# app.add_url_rule("/", view_func = r.index)
+import views.root
+app.register_blueprint(views.root.bpRoot)
 
 
 

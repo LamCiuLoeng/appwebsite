@@ -11,3 +11,6 @@ DBSession = scoped_session(maker)
 DeclarativeBase = declarative_base()
 metadata = DeclarativeBase.metadata
 
+
+from auth import User, Group, Permission
+from logic import AppObject
