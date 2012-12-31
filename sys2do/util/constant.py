@@ -15,6 +15,7 @@ MESSAGE_ERROR = "ERROR"
 
 
 # alert messages
+MSG_NO_ENOUGH_PARAMS = u'没有提供足够信息！'
 MSG_NO_SUCH_ACTION = u'没有该操作！'
 MSG_SAVE_SUCC = u'成功保存记录！'
 MSG_UPDATE_SUCC = u'成功更新记录！'

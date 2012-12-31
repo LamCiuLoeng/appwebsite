@@ -10,9 +10,9 @@ from sqlalchemy.sql.expression import and_
 from sys2do.views import BasicView
 from sys2do.util.decorator import templated
 from sys2do.model import User, DBSession
-from sys2do.util.common import _g, _error
+from sys2do.util.common import _g, _error, _gs
 from sys2do.util.constant import MESSAGE_ERROR, MSG_USER_NOT_EXIST, \
-    MSG_WRONG_PASSWORD
+    MSG_WRONG_PASSWORD, MSG_NO_ENOUGH_PARAMS
 
 __all__ = ['bpRoot']
 
@@ -46,17 +46,19 @@ class RootView(BasicView):
 
 
     def check(self):
+        email, password = _gs('email', 'password')
+        if not email or not password :
+            flash(MSG_NO_ENOUGH_PARAMS, MESSAGE_ERROR)
+            return redirect(url_for('bpRoot.view', action = 'login', next = _g('next')))
+
         try:
-            u = DBSession.query(User).filter(and_(User.active == 0, User.name == _g('name'))).one()
+#            u = DBSession.query(User).filter(and_(User.active == 0, User.email.op('ilike')(_g('email')))).one()
+            u = DBSession.query(User).filter(and_(User.active == 0, User.email == email)).one()
         except:
             _error(traceback.print_exc())
             flash(MSG_USER_NOT_EXIST, MESSAGE_ERROR)
             return redirect(url_for('bpRoot.view', action = 'login', next = _g('next')))
         else:
-            if not _g('password'):
-                flash(MSG_WRONG_PASSWORD, MESSAGE_ERROR)
-                return redirect(url_for('bpRoot.view', action = 'login', next = _g('next')))
-
             if not u.validate_password(_g('password')):
                 flash(MSG_WRONG_PASSWORD, MESSAGE_ERROR)
                 return redirect(url_for('bpRoot.view', action = 'login', next = _g('next')))
@@ -74,7 +76,7 @@ class RootView(BasicView):
                 session.permanent = True
                 DBSession.commit()
                 if _g('next') : return redirect(_g('next'))
-                return redirect(url_for('.view', action = 'index'))
+                return redirect(url_for('bpConsoles.view', action = 'index'))
 
 
     def logout(self):

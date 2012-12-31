@@ -2,7 +2,7 @@
 from functools import wraps
 from flask import request, redirect, url_for, render_template, session, flash
 
-__all__ = ['templated', ]
+__all__ = ['templated', 'login_required' ]
 
 def templated(template = None):
     def decorator(f):
@@ -22,3 +22,12 @@ def templated(template = None):
             return render_template(template_name, **ctx)
         return decorated_function
     return decorator
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('login', None):
+            return redirect(url_for('bpRoot.login', next = request.url))
+        return f(*args, **kwargs)
+    return decorated_function

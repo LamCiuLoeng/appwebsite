@@ -114,17 +114,17 @@ class User(DeclarativeBase, SysMixin):
     __tablename__ = 'system_user'
 
     id = Column(Integer, autoincrement = True, primary_key = True)
-    name = Column(Text, unique = True, nullable = False)
-    email = Column(Text)
+#    name = Column(Text, unique = True, nullable = False)
+    email = Column(Text, unique = True, nullable = False)
     _password = Column('password', Text)
 
     mobile = Column(Text)
     image_url = Column(Text)
     last_login = Column(DateTime, default = dt.now)
 
-    def __repr__(self): return self.name
-    def __str__(self): return self.name
-    def __unicode__(self): return self.name
+    def __repr__(self): return self.email
+    def __str__(self): return self.email
+    def __unicode__(self): return self.email
 
 
     @property
@@ -138,12 +138,8 @@ class User(DeclarativeBase, SysMixin):
     @classmethod
     def by_email_address(cls, email):
         """Return the user object whose email address is ``email``."""
-        return DBSession.query(cls).filter(cls.email_address == email).first()
+        return DBSession.query(cls).filter(cls.email == email).first()
 
-    @classmethod
-    def by_user_name(cls, username):
-        """Return the user object whose user name is ``username``."""
-        return DBSession.query(cls).filter(cls.name == username).first()
 #
 #    def validate_password(self, password):
 #        return self.password == password
@@ -197,14 +193,14 @@ class User(DeclarativeBase, SysMixin):
         return self.password[40:] == hashed_pass.hexdigest()
 
 
-    @classmethod
-    def identify(cls, value):
-        return DBSession.query(cls).filter(cls.user_name.match(value)).one()
+#    @classmethod
+#    def identify(cls, value):
+#        return DBSession.query(cls).filter(cls.user_name.match(value)).one()
 
     def populate(self):
         return {
                 'id' : self.id,
-                'name' : self.name,
+#                'name' : self.name,
                 'password' : self.password,
                 'email' : self.email,
                 'image_url' : self.image_url,

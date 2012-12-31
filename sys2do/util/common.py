@@ -10,10 +10,15 @@ from flask import request
 from flask import current_app as app
 
 
-__all__ = ['_g', '_gl', '_gp', '_debug', '_info', '_error' ]
+__all__ = ['_g', '_gs', '_gl', '_gp', '_debug', '_info', '_error' ]
 
 def _g(name, default = None):
     return request.values.get(name, default) or None
+
+
+def _gs(*name_list):
+    return [_g(name) for name in name_list]
+
 
 def _gl(name):
     return request.form.getlist(name)

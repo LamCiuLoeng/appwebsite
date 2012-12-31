@@ -27,7 +27,11 @@ for error_code in [403, 404] : app.error_handler_spec[None][error_code] = s.erro
 import views.root
 app.register_blueprint(views.root.bpRoot)
 
-
+#===============================================================================
+# consoles.py
+#===============================================================================
+import views.consoles
+app.register_blueprint(views.consoles.bpConsoles, url_prefix = '/c')
 
 
 #===============================================================================
