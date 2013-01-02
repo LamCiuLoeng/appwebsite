@@ -1,0 +1,67 @@
+{% extends "master.html" %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <!-- nav begin -->
+            <div class="span3">
+                <p><a class="btn btn-large btn-success" href="{{url_for('bpConsoles.view',action='createApp')}}">创建我的 App</a></p>
+                <ul class="nav nav-list well">
+                    <li class="nav-header">我的 App 列表</li>
+                    {% for app in apps %}
+                        {% if app.id == None %}
+                            <li class="active"><a href="{{url_for('.view',action='updateApp',id=app.id)}}">{{app}}</a></li>
+                        {% else %}
+                            <li><a href="{{url_for('.view',action='updateApp',id=app.id)}}">{{app}}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- nav end -->
+
+            <div class="span9">
+                <!-- content begin -->
+                <div class="row">
+                    <div class="control-group pull-right">
+                        <a class="btn  btn-primary" href="{{url_for('.view',action='createArticle',appid=app.id)}}">添加新文章</a>
+                    </div>             
+                </div>
+                <hr />
+                <div class="">
+                    <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>文章名称</th>
+                            <th>创建日期</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in articles %}
+                            <tr>
+                                <td>{{a}}</td>
+                                <td>{{a.create_time|ft}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a class="btn btn-mini" href="{{url_for('.view',action='updateArticle',id=a.id)}}">编辑</a>
+                                        <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a tabindex="-1" href="#">向上</a></li>
+                                            <li><a tabindex="-1" href="#">向下</a></li>
+                                            <li><a tabindex="-1" href="{{url_for('.view',action='delArticle',id=a.id)}}">删除</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}     
+                    </tbody>                        
+                    </table>
+                </div>
+                <!-- content end -->
+        
+            </div>
+        </div>
+    </div>
+{% endblock %}

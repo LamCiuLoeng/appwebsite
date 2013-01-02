@@ -1,0 +1,40 @@
+{% extends "master.html" %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <!-- nav begin -->
+            <div class="span3">
+                <p><a class="btn btn-large btn-success" href="{{url_for('bpConsoles.view',action='createApp')}}">创建我的 App</a></p>
+                
+            </div>
+            <!-- nav end -->
+
+            <div class="span9">
+
+                <!-- content begin -->
+                <div>
+                    <form class="form-horizontal" action="{{url_for('bpConsoles.view',action='saveNewApp')}}" method="post">
+                        <h3 class="form-signin-heading">创建我的新 App</h3>
+                        <div class="control-group">
+                            <label class="control-label" for="appName">App 名称</label>
+                            <div class="controls"><input type="text" id="appName" name="appName" placeholder="App 名称"></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="appDesc">App 描述</label>
+                            <div class="controls"><textarea id="appDesc" name="appDesc" rows="3"></textarea></div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                            <button class="btn btn-primary" type="submit">提交</button>
+                            <a class="btn" type="cancel" href="{{url_for('bpConsoles.view')}}">取消</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- content end -->
+        
+            </div>
+        </div>
+    </div>
+{% endblock %}

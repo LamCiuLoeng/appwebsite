@@ -11,8 +11,8 @@ from sys2do.views import BasicView
 from sys2do.util.decorator import templated
 from sys2do.model import User, DBSession
 from sys2do.util.common import _g, _error, _gs
-from sys2do.util.constant import MESSAGE_ERROR, MSG_USER_NOT_EXIST, \
-    MSG_WRONG_PASSWORD, MSG_NO_ENOUGH_PARAMS
+from sys2do.constant import MESSAGE_ERROR, MSG_USER_NOT_EXIST, \
+    MSG_WRONG_PASSWORD, MSG_NO_ENOUGH_PARAMS, MESSAGE_WARNING
 
 __all__ = ['bpRoot']
 
@@ -48,7 +48,7 @@ class RootView(BasicView):
     def check(self):
         email, password = _gs('email', 'password')
         if not email or not password :
-            flash(MSG_NO_ENOUGH_PARAMS, MESSAGE_ERROR)
+            flash(MSG_NO_ENOUGH_PARAMS, MESSAGE_WARNING)
             return redirect(url_for('bpRoot.view', action = 'login', next = _g('next')))
 
         try:
@@ -56,11 +56,11 @@ class RootView(BasicView):
             u = DBSession.query(User).filter(and_(User.active == 0, User.email == email)).one()
         except:
             _error(traceback.print_exc())
-            flash(MSG_USER_NOT_EXIST, MESSAGE_ERROR)
+            flash(MSG_USER_NOT_EXIST, MESSAGE_WARNING)
             return redirect(url_for('bpRoot.view', action = 'login', next = _g('next')))
         else:
             if not u.validate_password(_g('password')):
-                flash(MSG_WRONG_PASSWORD, MESSAGE_ERROR)
+                flash(MSG_WRONG_PASSWORD, MESSAGE_WARNING)
                 return redirect(url_for('bpRoot.view', action = 'login', next = _g('next')))
             else:
                 # fill the info into the session

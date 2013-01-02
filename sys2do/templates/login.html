@@ -40,17 +40,21 @@
 
 {% block container %}
     <div class="container">
-      <form class="form-signin" action="{{url_for('bpRoot.view',action='check')}}" method="post">
-        <h2 class="form-signin-heading">请登录</h2>
-        <input type="email" class="input-block-level" placeholder="邮箱地址" name="email">
-        <input type="password" class="input-block-level" placeholder="密码" name="password">
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> 记住我
-        </label>
-        <button class="btn btn-large btn-primary" type="submit">登入</button>
-        <a class="btn btn-large" type="cancel" href="{{url_for('bpRoot.view')}}">取消</a>
-      </form>
-
+      {{mymacros.showmsg()}}
+      
+      <div class="container"> 
+          <form class="form-signin" action="{{url_for('bpRoot.view',action='check')}}" method="post">
+            <h2 class="form-signin-heading">请登录</h2>
+            <input type="email" class="input-block-level" placeholder="邮箱地址" name="email">
+            <input type="password" class="input-block-level" placeholder="密码" name="password">
+            <label class="checkbox">
+              <input type="checkbox" value="remember-me"> 记住我
+            </label>
+            <button class="btn btn-large btn-primary" type="submit">登入</button>
+            <a class="btn btn-large" type="cancel" href="{{url_for('bpRoot.view')}}">取消</a>
+          </form>
+      </div>
+    
     </div> <!-- /container -->
 {% endblock %}
 

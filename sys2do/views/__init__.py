@@ -11,6 +11,8 @@ __all__ = ['BasicView']
 class BasicView(View):
     methods = ['GET', 'POST']
 
+    template_dir = None
+
     def default(self):  return url_for('.view', action = 'index')
 
     def dispatch_request(self, action):

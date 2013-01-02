@@ -1,0 +1,54 @@
+{% extends "master.html" %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <!-- nav begin -->
+            <div class="span3">
+                <p><a class="btn btn-large btn-success" href="{{url_for('bpConsoles.view',action='createApp')}}">创建我的 App</a></p>      
+            </div>
+            <!-- nav end -->
+
+            <div class="span9">
+
+                <!-- content begin -->
+                <div>
+                    <form class="" action="{{url_for('bpConsoles.view',action='saveNewArticle')}}" method="post">
+                        <input type="hidden" name="appid" value="{{appid}}">
+                        <h3 class="form-signin-heading">创建新的文章</h3>
+                        <div class="control-group">
+                            <label class="control-label" for="title">文章标题</label>
+                            <div class="controls"><input type="text" id="title" name="title" placeholder="文章标题" class="input-xxlarge"></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="sub_title">文章子标题</label>
+                            <div class="controls"><input type="text" id="sub_title" name="sub_title" placeholder="文章子标题" class="input-xxlarge"></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="validate_date">有效日期</label>
+                            <div class="controls"><input type="date" id="validate_date" name="validate_date" placeholder="有效日期" class="input-xxlarge"></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="desc">简短描述</label>
+                            <div class="controls"><textarea id="desc" name="desc" rows="2" class="input-xxlarge"></textarea></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="content">具体内容</label>
+                            <div class="controls"><textarea id="content" name="content" rows="10" class="input-xxlarge"></textarea></div>
+                        </div>
+                        
+                        
+                        <div class="control-group">
+                            <div class="controls">
+                            <button class="btn btn-primary" type="submit">提交</button>
+                            <a class="btn" type="cancel" href="{{url_for('bpConsoles.view')}}">取消</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- content end -->
+        
+            </div>
+        </div>
+    </div>
+{% endblock %}

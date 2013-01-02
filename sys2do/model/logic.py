@@ -21,6 +21,10 @@ class AppObject(DeclarativeBase, SysMixin):
     name = Column(Text, unique = True, nullable = False)
     desc = Column(Text)
 
+    def __repr__(self): return self.name
+    def __str__(self): return self.name
+    def __unicode__(self): return self.name
+
 
 
 class AppArticle(DeclarativeBase, SysMixin):
@@ -39,3 +43,8 @@ class AppArticle(DeclarativeBase, SysMixin):
     validate_date = Column(Text)
     status = Column(Integer, default = 0)
     seq = Column(Integer)
+
+
+    def __repr__(self): return self.title
+    def __str__(self): return self.title
+    def __unicode__(self): return self.title

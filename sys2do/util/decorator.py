@@ -12,6 +12,9 @@ def templated(template = None):
             if template_name is None:
 #                template_name = request.endpoint.replace('.', '/') + '.html'
                 template_name = "%s.html" % f.__name__
+                _self = args[0]
+                if getattr(_self, 'template_dir', None):
+                    template_name = '%s/%s' % (_self.template_dir, template_name)
 
             ctx = f(*args, **kwargs)
             if ctx is None:

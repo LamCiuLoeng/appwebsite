@@ -5,14 +5,14 @@
         <div class="row">
             <!-- nav begin -->
             <div class="span3">
-                <p><a class="btn btn-large btn-primary" href="">创建我的 App</a></p>
+                <p><a class="btn btn-large btn-success" href="{{url_for('bpConsoles.view',action='createApp')}}">创建我的 App</a></p>
                 <ul class="nav nav-list well">
                     <li class="nav-header">我的 App 列表</li>
                     {% for app in apps %}
                         {% if app.id == None %}
-                            <li class="active"><a href="#">{{app}}</a></li>
+                            <li class="active"><a href="{{url_for('.view',action='updateApp',id=app.id)}}">{{app}}</a></li>
                         {% else %}
-                            <li><a href="#">{{app}}</a></li>
+                            <li><a href="{{url_for('.view',action='updateApp',id=app.id)}}">{{app}}</a></li>
                         {% endif %}
                     {% endfor %}
                 </ul>

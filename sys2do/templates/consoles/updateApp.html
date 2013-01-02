@@ -1,0 +1,47 @@
+{% extends "master.html" %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <!-- nav begin -->
+            <div class="span3">
+                <p><a class="btn btn-large btn-success" href="{{url_for('bpConsoles.view',action='createApp')}}">创建我的 App</a></p>
+                
+            </div>
+            <!-- nav end -->
+
+            <div class="span9">
+                <!-- content begin -->
+                <div class="row">
+                    <div class="control-group pull-right">
+                        <a class="btn  btn-primary" href="{{url_for('.view',action='listArticle',appid=app.id)}}">管理该 App的文章列表</a>
+                        <a class="btn  btn-danger" href="{{url_for('.view',action='delApp',id=app.id)}}">删除该 App</a>
+                    </div>             
+                </div>
+                <hr />
+                <div class="">
+                    <form class="form-horizontal" action="{{url_for('bpConsoles.view',action='saveApp')}}" method="post">
+                        <input type="hidden" name="id" value="{{app.id}}">                        
+                        <h3 class="form-signin-heading">更新 App信息</h3>
+                        <div class="control-group">
+                            <label class="control-label" for="appName">App 名称</label>
+                            <div class="controls"><input type="text" id="appName" name="appName" placeholder="App 名称" value="{{app.name}}" disabled="disabled"></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="appDesc">App 描述</label>
+                            <div class="controls"><textarea id="appDesc" name="appDesc" rows="3">{{app.desc}}</textarea></div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                            <button class="btn btn-primary" type="submit">提交</button>
+                            <a class="btn" type="cancel" href="{{url_for('bpConsoles.view')}}">取消</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- content end -->
+        
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -23,3 +23,27 @@
           {% endfor %}
       </select>
 {%- endmacro %}
+
+
+{% macro showmsg() -%}
+    <div class="container">
+        {% for category,message in get_flashed_messages(with_categories=true) %}
+            {% if category == 'INFO'%}
+                <div class="alert alert-success">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>提示！</strong> {{message}}
+                </div>
+            {% elif category == 'WARNING' %}
+                <div class="alert">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>警告！</strong> {{message}}
+                </div>
+            {% elif category == 'ERROR' %}
+                <div class="alert alert-error">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>错误！</strong> {{message}}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{%- endmacro %}

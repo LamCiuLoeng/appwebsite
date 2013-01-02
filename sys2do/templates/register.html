@@ -27,42 +27,44 @@
 
 {% block container %}
     <div class="container">
-        <div class="row">
-            <div class="span10 offset1">
-
-              <div class="form-register">
-                  <h2>注册信息</h2>
-                  <form class="form-horizontal" action="{{url_for('bpRoot.view',action='save_register')}}" method="post">
-                      <div class="control-group error">
-                        <label class="control-label" for="inputEmail">邮箱地址</label>
-                        <div class="controls">
-                          <input type="text" id="inputEmail" placeholder="Email" class="input-xlarge"/>
-                          <span class="help-inline">Please correct the error</span>
-                        </div>
-                      </div>
-                      <div class="control-group">
-                        <label class="control-label" for="inputPassword">密码</label>
-                        <div class="controls">
-                          <input type="password" id="inputPassword" placeholder="Password" class="input-xlarge"/>
-                        </div>
-                      </div>
-                       <div class="control-group error">
-                        <label class="control-label" for="inputPassword">确认密码</label>
-                        <div class="controls">
-                          <input type="password" id="inputPassword" placeholder="Confirm Password" class="input-xlarge"/>
-                          <span class="help-inline">Please correct the error</span>
-                        </div>
-                      </div>
-                      <div class="control-group">
-                        <div class="controls">
-                          <button type="submit" class="btn btn-large btn-primary">提交</button>
-                          <a type="cancel" class="btn btn-large" href="{{url_for('bpRoot.view')}}">取消</a>
-                        </div>
-                      </div>
-                    </form>
-               </div>
-
-            </div>
-        </div>
+        {{mymacros.showmsg()}}
+        
+        <div class="container">
+            <div class="row">
+                <div class="span10 offset1">
+                  <div class="form-register">
+                      <h2>注册信息</h2>
+                      <form class="form-horizontal" action="{{url_for('bpRoot.view',action='save_register')}}" method="post">
+                          <div class="control-group error">
+                            <label class="control-label" for="inputEmail">邮箱地址</label>
+                            <div class="controls">
+                              <input type="text" id="inputEmail" placeholder="Email" class="input-xlarge"/>
+                              <span class="help-inline">Please correct the error</span>
+                            </div>
+                          </div>
+                          <div class="control-group">
+                            <label class="control-label" for="inputPassword">密码</label>
+                            <div class="controls">
+                              <input type="password" id="inputPassword" placeholder="Password" class="input-xlarge"/>
+                            </div>
+                          </div>
+                           <div class="control-group error">
+                            <label class="control-label" for="inputPassword">确认密码</label>
+                            <div class="controls">
+                              <input type="password" id="inputPassword" placeholder="Confirm Password" class="input-xlarge"/>
+                              <span class="help-inline">Please correct the error</span>
+                            </div>
+                          </div>
+                          <div class="control-group">
+                            <div class="controls">
+                              <button type="submit" class="btn btn-large btn-primary">提交</button>
+                              <a type="cancel" class="btn btn-large" href="{{url_for('bpRoot.view')}}">取消</a>
+                            </div>
+                          </div>
+                        </form>
+                   </div> <!-- /form-register -->
+                </div> <!-- /span10 offset1 -->
+            </div>  <!-- /row -->
+        </div> <!-- /container -->
     </div> <!-- /container -->
 {% endblock %}
