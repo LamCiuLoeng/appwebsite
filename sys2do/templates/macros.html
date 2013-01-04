@@ -1,10 +1,12 @@
 {% macro mypaginate(records) -%}
-	{{records.pager(format='$link_first $link_previous ~3~ $link_next $link_last, total $item_count records(s)',
+    <div class="pagination pagination-right">
+	{{records.pager(format='$link_first $link_previous ~3~ $link_next $link_last, 总共$item_count条记录',
 					show_if_single_page=True,
-					symbol_first='First',
-					symbol_last='Last',
-					symbol_previous='Previous',
-					symbol_next='Next')}}
+					symbol_first='第一页',
+					symbol_last='最后一页',
+					symbol_previous='前一页',
+					symbol_next='后一页')}}
+    </div>
 {%- endmacro %}
 
 

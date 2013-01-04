@@ -37,3 +37,4 @@ MSG_ORDER_NOT_FIT_FOR_DELIVER = u'所选择的订单中有状态不能创建送�
 MSG_ATLEAST_ONE_ORDER_TO_CREATE_DELIVER = u'请选择至少一条记录以创建送货单！'
 MSG_ATLEAST_ONE_ORDER_TO_EXPORT = u'请先选择订单然后再导出！'
 MSG_LEAVE_WITHOUT_SAVING = u'确认不保存而离开这个页面吗？'
+MSG_WRONG_CONFIRM_PASSWORD = u'确认密码与密码不相符！'

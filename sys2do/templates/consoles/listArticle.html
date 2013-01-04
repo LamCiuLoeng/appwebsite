@@ -4,30 +4,21 @@
     <div class="container">
         <div class="row">
             <!-- nav begin -->
-            <div class="span3">
-                <p><a class="btn btn-large btn-success" href="{{url_for('bpConsoles.view',action='createApp')}}">创建我的 App</a></p>
-                <ul class="nav nav-list well">
-                    <li class="nav-header">我的 App 列表</li>
-                    {% for app in apps %}
-                        {% if app.id == None %}
-                            <li class="active"><a href="{{url_for('.view',action='updateApp',id=app.id)}}">{{app}}</a></li>
-                        {% else %}
-                            <li><a href="{{url_for('.view',action='updateApp',id=app.id)}}">{{app}}</a></li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
+            <div class="span3">{% include "/consoles/left.html" %}</div>
             <!-- nav end -->
 
             <div class="span9">
-                <!-- content begin -->
-                <div class="row">
-                    <div class="control-group pull-right">
+                <!-- content begin -->                
+                <div class="row-fluid">
+                    <div class="span10">
+                        <h3>我的 App : {{app}}</h3>
+                    </div>
+                    <div class="span2">
                         <a class="btn  btn-primary" href="{{url_for('.view',action='createArticle',appid=app.id)}}">添加新文章</a>
-                    </div>             
+                    </div>
                 </div>
                 <hr />
-                <div class="">
+                <div>
                     <table class="table table-striped">
                     <thead>
                         <tr>
@@ -37,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for a in articles %}
+                        {% for a in records.items %}
                             <tr>
                                 <td>{{a}}</td>
                                 <td>{{a.create_time|ft}}</td>
@@ -55,9 +46,10 @@
                                     </div>
                                 </td>
                             </tr>
-                        {% endfor %}     
-                    </tbody>                        
+                        {% endfor %}
+                    </tbody>
                     </table>
+                        {{mymacros.mypaginate(records)}}
                 </div>
                 <!-- content end -->
         

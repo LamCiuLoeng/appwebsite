@@ -4,23 +4,23 @@
     <div class="container">
         <div class="row">
             <!-- nav begin -->
-            <div class="span3">
-                <p><a class="btn btn-large btn-success" href="{{url_for('bpConsoles.view',action='createApp')}}">创建我的 App</a></p>      
-            </div>
+            <div class="span3">{% include "/consoles/left.html" %}</div>
             <!-- nav end -->
 
             <div class="span9">
                 <!-- content begin -->
-                <div class="row">
-                    <div class="control-group pull-right">
+                <div class="row-fluid">
+                    <div class="span10">
+                        <h3 class="form-signin-heading">更新文章信息</h3>
+                    </div>
+                    <div class="span2">
                         <a class="btn  btn-danger" href="{{url_for('.view',action='delArticle',id=article.id)}}">删除该文章</a>
-                    </div>             
+                    </div>
                 </div>
                 <hr />
                 <div>
                     <form class="" action="{{url_for('bpConsoles.view',action='saveArticle')}}" method="post">
                         <input type="hidden" name="id" value="{{article.id}}">
-                        <h3 class="form-signin-heading">更新文章信息</h3>
                         <div class="control-group">
                             <label class="control-label" for="title">文章标题</label>
                             <div class="controls">

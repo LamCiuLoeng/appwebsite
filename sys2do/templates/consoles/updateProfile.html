@@ -8,27 +8,23 @@
             <!-- nav end -->
 
             <div class="span9">
+
                 <!-- content begin -->
                 <div class="row-fluid">
                     <div class="span7">
-                        <h3 class="form-signin-heading">更新 App信息</h3>
-                    </div>
-                    <div class="span5">
-                        <a class="btn  btn-primary" href="{{url_for('.view',action='listArticle',appid=app.id)}}">管理该 App 的文章列表</a>
-                        <a class="btn  btn-danger" href="{{url_for('.view',action='delApp',id=app.id)}}">删除该 App</a>
+                        <h3 class="form-signin-heading">修改基本信息</h3>
                     </div>
                 </div>
                 <hr />
                 <div>
-                    <form class="" action="{{url_for('bpConsoles.view',action='saveApp')}}" method="post">
-                        <input type="hidden" name="id" value="{{app.id}}">                 
+                    <form class="" action="{{url_for('bpConsoles.view',action='saveProfile')}}" method="post">
                         <div class="control-group">
-                            <label class="control-label" for="appName">App 名称</label>
-                            <div class="controls"><input type="text" id="appName" name="appName" placeholder="App 名称" value="{{app.name}}" disabled="disabled" class="input-xxlarge"></div>
+                            <label class="control-label" for="email">邮箱地址</label>
+                            <div class="controls"><input type="text" id="email" name="email" placeholder="邮箱地址" value="{{user.email}}" disabled="disabled" class="input-xxlarge"></div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="appDesc">App 描述</label>
-                            <div class="controls"><textarea id="appDesc" name="appDesc" rows="10" class="input-xxlarge">{{app.desc}}</textarea></div>
+                            <label class="control-label" for="mobile">移动电话</label>
+                            <div class="controls"><input type="text" id="mobile" name="mobile" placeholder="移动电话" value="{{user.mobile|f}}" class="input-xxlarge"></div>
                         </div>
                         <div class="control-group">
                             <div class="controls">

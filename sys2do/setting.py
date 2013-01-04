@@ -29,7 +29,7 @@ BEAKER_SESSION = {
                   'session.data_dir': os.path.join(os.path.dirname(__file__), "session", "data"),
                   'session.lock_dir': os.path.join(os.path.dirname(__file__), "session", "lock"),
                   }
-                  
+
 # config for logging
 LOGGING_FILE = True
 LOGGING_FILE_PATH = os.path.join(os.path.dirname(__file__), "..", "system_log.txt")
