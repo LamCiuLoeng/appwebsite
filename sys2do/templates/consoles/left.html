@@ -8,12 +8,12 @@
     </li>
     <li class="divider"></li>
     <li class="nav-header">我的 App 列表
-        <ul>
-            {% for app in apps %}
-                {% if app.id == None %}
-                    <li class="active"><a href="{{url_for('.view',action='updateApp',id=app.id)}}">{{app}}</a></li>
+        <ul class="nav nav-list">
+            {% for (appid,appname) in session['apps'] %}
+                {% if appid == session['current_app_id'] %}
+                    <li class="active"><a href="{{url_for('.view',action='updateApp',id=appid)}}">{{appname}}</a></li>
                 {% else %}
-                    <li><a href="{{url_for('.view',action='updateApp',id=app.id)}}">{{app}}</a></li>
+                    <li><a href="{{url_for('.view',action='updateApp',id=appid)}}">{{appname}}</a></li>
                 {% endif %}
             {% endfor %}
         </ul>

@@ -1,5 +1,18 @@
 {% extends "master.html" %}
 
+{% block subtitle %} - 更新文章信息{% endblock %}
+
+{% block extJS %}
+<script src="{{url_for('static', filename='js/ueditor/editor_config.js')}}" type="text/javascript"></script>
+<script src="{{url_for('static', filename='js/ueditor/editor_all_min.js')}}" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var editor_a = new baidu.editor.ui.Editor();
+        editor_a.render('content');
+    });
+</script>
+{% endblock %}
+
 {% block main %}
     <div class="container">
         <div class="row">

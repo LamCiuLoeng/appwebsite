@@ -14,3 +14,4 @@ metadata = DeclarativeBase.metadata
 
 from auth import User, Group, Permission
 from logic import AppObject
+from system import UploadFile

@@ -31,14 +31,9 @@ class ConsolesView(BasicView):
 
     @templated()
     def index(self):
-        apps = DBSession.query(AppObject)\
-            .filter(and_(AppObject.active == 0,
-                    AppObject.create_by_id == session['user_profile']['id'])) \
-            .order_by(AppObject.create_time)
+        session['current_app_id'] = None
 
-        return {
-                'apps' : apps,
-                }
+
 
     @templated()
     def updateProfile(self):
@@ -86,6 +81,13 @@ class ConsolesView(BasicView):
         return redirect(url_for('.view'))
 
 
+    def _updateAppInSession(self):
+        apps = DBSession.query(AppObject).filter(and_(AppObject.active == 0,
+                        AppObject.create_by_id == session['user_profile']['id'])).order_by(AppObject.create_time)
+        session['apps'] = [(app.id, unicode(app)) for app in apps]
+
+
+
     @templated()
     def createApp(self):
         pass
@@ -106,6 +108,7 @@ class ConsolesView(BasicView):
                                         ))
                 DBSession.commit()
                 flash(MSG_SAVE_SUCC, MESSAGE_INFO)
+                self._updateAppInSession()
                 return redirect(url_for('.view'))
             except:
                 DBSession.rollback()
@@ -122,6 +125,7 @@ class ConsolesView(BasicView):
         try:
             app = DBSession.query(AppObject).filter(and_(AppObject.id == appid,
                 AppObject.create_by_id == session['user_profile']['id'])).one()
+            session['current_app_id'] = app.id
         except:
             flash(MSG_RECORD_NOT_EXIST, MESSAGE_ERROR)
             return redirect(url_for('.view'))
@@ -160,6 +164,7 @@ class ConsolesView(BasicView):
         try:
             app.active = 1
             DBSession.commit()
+            self._updateAppInSession()
             flash(MSG_DELETE_SUCC, MESSAGE_INFO)
         except:
             DBSession.rollback()

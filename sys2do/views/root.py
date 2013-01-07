@@ -4,15 +4,18 @@ from datetime import datetime as dt
 from flask import current_app as app
 from flask import g, render_template, flash, session, redirect, url_for, request
 from flask.blueprints import Blueprint
+from flask.helpers import jsonify
 from sqlalchemy.sql.expression import and_
 
 
 from sys2do.views import BasicView
 from sys2do.util.decorator import templated
-from sys2do.model import User, DBSession
-from sys2do.util.common import _g, _error, _gs
 from sys2do.constant import MESSAGE_ERROR, MSG_USER_NOT_EXIST, \
     MSG_WRONG_PASSWORD, MSG_NO_ENOUGH_PARAMS, MESSAGE_WARNING
+
+from sys2do.model import User, DBSession, AppObject
+from sys2do.util.common import _g, _error, _gs, upload
+
 
 __all__ = ['bpRoot']
 
@@ -72,6 +75,11 @@ class RootView(BasicView):
                         permissions.add(p.name)
                 session['user_profile']['groups'] = [g.name for g in u.groups]
                 session['user_profile']['permissions'] = list(permissions)
+
+                apps = DBSession.query(AppObject).filter(and_(AppObject.active == 0,
+                        AppObject.create_by_id == u.id)).order_by(AppObject.create_time)
+
+                session['apps'] = [(app.id, unicode(app)) for app in apps]
                 u.last_login = dt.now()
                 session.permanent = True
                 DBSession.commit()
@@ -83,6 +91,19 @@ class RootView(BasicView):
         session.pop('login', None)
         session.pop('user_profile', None)
         return redirect(url_for('bpRoot.view'))
+
+
+    def upload(self):
+        f = upload('upfile')
+        if not f : return jsonify({
+                                   'url' : '', 'title' : '', 'state' : 'ERROR',
+                                   })
+
+        return jsonify({
+                        'url' : f.url ,
+                        'title' : f.name,
+                        'state' : 'SUCCESS',
+                        })
 
 bpRoot.add_url_rule('/', view_func = RootView.as_view('view'), defaults = {'action':'index'})
 bpRoot.add_url_rule('/<action>', view_func = RootView.as_view('view'))
