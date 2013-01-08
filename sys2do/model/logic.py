@@ -11,6 +11,7 @@ from sqlalchemy.types import Integer, Text
 from sqlalchemy.orm import relation, backref, synonym
 from sys2do.model import DeclarativeBase
 from sys2do.model.auth import SysMixin
+from system import UploadFile
 
 
 
@@ -20,6 +21,8 @@ class AppObject(DeclarativeBase, SysMixin):
     id = Column(Integer, autoincrement = True, primary_key = True)
     name = Column(Text, unique = True, nullable = False)
     desc = Column(Text)
+    logo_id = Column(Integer, ForeignKey('system_upload_file.id'))
+    logo = relation(UploadFile)
 
     def __repr__(self): return self.name
     def __str__(self): return self.name
