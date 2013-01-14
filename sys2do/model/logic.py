@@ -22,7 +22,11 @@ class AppObject(DeclarativeBase, SysMixin):
     name = Column(Text, unique = True, nullable = False)
     desc = Column(Text)
     logo_id = Column(Integer, ForeignKey('system_upload_file.id'))
-    logo = relation(UploadFile)
+    logo = relation(UploadFile, primaryjoin = logo_id == UploadFile.id)
+    version_code = Column(Integer, default = 1)
+    version_name = Column(Text, default = '1.0.0')
+    appfile_id = Column(Integer, ForeignKey('system_upload_file.id'))
+    appfile = relation(UploadFile, primaryjoin = appfile_id == UploadFile.id)
 
     def __repr__(self): return self.name
     def __str__(self): return self.name

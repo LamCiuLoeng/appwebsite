@@ -48,3 +48,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///%s' % (os.path.join(os.path.dirname(__file_
 
 # setting for paginate ,every page is 20 recore
 PAGINATE_PER_PAGE = 20
+
+WEBSITE_ROOT = 'http://192.168.20.41:5000'
+APP_FOLDER = os.path.join(os.path.dirname(__file__), "app")
+APP_PACKAGE = 'sys2do.app'

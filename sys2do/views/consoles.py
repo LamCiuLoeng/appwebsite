@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import traceback
+import os
 from datetime import datetime as dt
 from flask import current_app as app
 from flask import g, render_template, flash, session, redirect, url_for, request
@@ -18,7 +19,12 @@ from sys2do.constant import MESSAGE_ERROR, MSG_USER_NOT_EXIST, \
     MSG_NO_ENOUGH_PARAMS, MSG_WRONG_CONFIRM_PASSWORD
 from sys2do.model.logic import AppObject, AppArticle
 from webhelpers import paginate
-from sys2do.setting import PAGINATE_PER_PAGE
+from sys2do.setting import PAGINATE_PER_PAGE, APP_FOLDER, APP_PACKAGE, \
+    UPLOAD_FOLDER_PREFIX, UPLOAD_FOLDER_URL, UPLOAD_FOLDER, WEBSITE_ROOT
+from sys2do.util.apphelper import createApp
+import shutil
+from sys2do.model.system import UploadFile
+from sys2do.util.qr_helper import createQR
 
 __all__ = ['bpConsoles']
 
@@ -102,10 +108,18 @@ class ConsolesView(BasicView):
                                             AppObject.name == appName)).one()
         except:
             try:
-                DBSession.add(AppObject(
-                                        name = appName,
-                                        desc = appDesc
-                                        ))
+                app = AppObject(name = appName, desc = appDesc)
+                DBSession.add(app)
+                DBSession.flush()
+                url = createApp(session['user_profile']['id'],
+                                    APP_FOLDER, APP_PACKAGE,
+                                    'app%s' % app.id, app.name)
+                if not url : raise Exception('App generation error!')
+                url = '%s%s' % (WEBSITE_ROOT, url)
+                imgFile = createQR(url)
+                if not imgFile : raise Exception('QR code generation error!')
+                DBSession.add(imgFile)
+                app.appfile = imgFile
                 DBSession.commit()
                 flash(MSG_SAVE_SUCC, MESSAGE_INFO)
                 self._updateAppInSession()

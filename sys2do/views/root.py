@@ -4,7 +4,7 @@ from datetime import datetime as dt
 from flask import current_app as app
 from flask import g, render_template, flash, session, redirect, url_for, request
 from flask.blueprints import Blueprint
-from flask.helpers import jsonify
+from flask.helpers import jsonify, send_file
 from sqlalchemy.sql.expression import and_
 
 
@@ -15,6 +15,9 @@ from sys2do.constant import MESSAGE_ERROR, MSG_USER_NOT_EXIST, \
 
 from sys2do.model import User, DBSession, AppObject
 from sys2do.util.common import _g, _error, _gs, upload
+from sys2do.model.logic import AppArticle
+from sys2do.setting import PAGINATE_PER_PAGE
+from sys2do.model.system import UploadFile
 
 
 __all__ = ['bpRoot']
@@ -104,6 +107,28 @@ class RootView(BasicView):
                         'title' : f.name,
                         'state' : 'SUCCESS',
                         })
+
+
+    def download(self):
+        fid = _g('id')
+        f = DBSession.query(UploadFile).get(fid)
+        return send_file(f.real_path, as_attachment = True)
+
+
+    def ajaxListArticle(self):
+        print "*" * 20
+        print "Get the article list!"
+        print "_" * 20
+        appid, page = _gs('appid', 'page')
+        if not page : page = 1
+        articles = DBSession.query(AppArticle).filter(and_(AppArticle.active == 0,
+                                                AppArticle.app_id == appid,)).order_by(AppArticle.seq)
+
+        return jsonify({
+                        'code' : 0,
+                        'data' : [[a.id, unicode(a)] for a in articles[(page - 1) * PAGINATE_PER_PAGE : page * PAGINATE_PER_PAGE]]
+                        })
+
 
 bpRoot.add_url_rule('/', view_func = RootView.as_view('view'), defaults = {'action':'index'})
 bpRoot.add_url_rule('/<action>', view_func = RootView.as_view('view'))
